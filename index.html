@@ -1,20 +1,50 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Chatbot Uni</title>
-</head>
-<body>
-  <h1>Bem-vindo(a) ao Assistente Uni</h1>
-  <p>Use o botão no canto inferior direito para falar com o chatbot.</p>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Chatbot Uni</title>
+    <script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
+    <style>
+      df-messenger {
+        --df-messenger-bot-message: #e0e0e0;
+        --df-messenger-button-titlebar-color: #00796b;
+        --df-messenger-chat-background-color: #ffffff;
+        --df-messenger-font-color: black;
+        --df-messenger-send-icon: #00796b;
+        --df-messenger-user-message: #c8e6c9;
+        z-index: 9999;
+      }
 
-  <!-- Chatbot do Dialogflow -->
-  <script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
-  <df-messenger
-    chat-title="Uni"
-    agent-id="eac55b4e-b376-4746-834a-37329f15e99c"
-    language-code="pt-br"
-  ></df-messenger>
-</body>
+      /* Força o chatbot a aparecer aberto sempre */
+      df-messenger chat-wrapper {
+        opacity: 1 !important;
+        pointer-events: auto !important;
+        transform: none !important;
+      }
+    </style>
+  </head>
+  <body>
+    <df-messenger
+      chat-title="Uni"
+      agent-id="eac55b4e-b376-4746-834a-37329f15e99c"
+      language-code="pt-br"
+    ></df-messenger>
+
+    <script>
+      // Aguarda o carregamento do chatbot
+      window.addEventListener('dfMessengerLoaded', function () {
+        const dfMessenger = document.querySelector('df-messenger');
+        const shadowRoot = dfMessenger.shadowRoot;
+
+        // Tenta abrir o chat programaticamente
+        const openChat = () => {
+          const fab = shadowRoot.querySelector('df-messenger-button');
+          if (fab) fab.click();
+        };
+
+        // Aguarda um tempo e tenta abrir
+        setTimeout(openChat, 1000);
+      });
+    </script>
+  </body>
 </html>
